@@ -7,7 +7,7 @@ resources:
   - name: debAql
     type: Aql
     configuration:
-      sourceArtifactory: acmeDistributionIntegration
+      sourceArtifactory: acme_co_artifactory
       query: items.find({"$and":[{"$or":[{"repo":{"$eq":"deb"}},{"repo":{"$eq":"acme_sthings_deb_local"}}]},{"$or":[{"name":{"$match":"${app_name}-*-${app_version}*"}},{"name":{"$match":"${app_name}_${app_version}_*"}}]}]})
   
   - name: debReleaseBundle
