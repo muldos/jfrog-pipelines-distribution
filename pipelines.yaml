@@ -20,14 +20,14 @@ resources:
   - name: debSignedBundle
     type: ReleaseBundle
     configuration:
-      sourceDistribution: StDistribution
+      sourceDistribution: acmeDistributionIntegration
       name: ${app_name}
       version: ${app_version}
 
   - name: debDistributionRules
     type: DistributionRule
     configuration:
-      sourceDistribution: StDistribution
+      sourceDistribution: acmeDistributionIntegration
       serviceName: "*"
       siteName: "*"
       cityName: "*"
