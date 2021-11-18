@@ -35,7 +35,7 @@ resources:
         - "CN" 
   
 pipelines:
-  - name: CreateDebDistribution
+  - name: acme_co_deb_distribution
     steps:
     - name: ExtractFileName
       type: Bash
