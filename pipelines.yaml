@@ -1,4 +1,4 @@
-  # Deb Resources
+resources:
   - name: debWebhook
     type: IncomingWebhook
     configuration:
