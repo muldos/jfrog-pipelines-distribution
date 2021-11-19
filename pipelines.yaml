@@ -89,7 +89,7 @@ pipelines:
             - echo $distro_version   
             - echo $distribution_filename
 
-            onSuccess: 
+        onSuccess: 
           - |
             resource_directory=$(find_resource_variable debReleaseBundle resourcePath)
             env_file_path="$resource_directory/debReleaseBundle.env"
