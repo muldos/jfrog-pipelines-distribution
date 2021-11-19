@@ -36,6 +36,8 @@ resources:
   
 pipelines:
   - name: acme_co_deb_distribution
+    configuration:
+      chronological: true
     steps:
     - name: ExtractFileName
       type: Bash
@@ -68,11 +70,9 @@ pipelines:
         dryRun: false
         sign: false
         description: "Application deb distribution"
-        inputSteps:
-          - name: ExtractFileName
         inputResources:
           - name: debAql
-            trigger: false
+            trigger: true
         outputResources:
           - name: debReleaseBundle
         releaseNotes:
@@ -89,8 +89,7 @@ pipelines:
             - echo $distro_version   
             - echo $distribution_filename
 
-
-        onSuccess: 
+            onSuccess: 
           - |
             resource_directory=$(find_resource_variable debReleaseBundle resourcePath)
             env_file_path="$resource_directory/debReleaseBundle.env"
