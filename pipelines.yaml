@@ -71,6 +71,8 @@ pipelines:
         inputResources:
           - name: debAql
             trigger: true
+          - name: debWebhook
+            trigger: false
         outputResources:
           - name: debReleaseBundle
         releaseNotes:
@@ -81,14 +83,12 @@ pipelines:
               * Points
       execution:
         onStart:
-            - echo $app_name
-            - echo $app_version
-            - echo $distro_version              
             - env
             - export_run_variables
             - echo $app_name
             - echo $app_version
             - echo $distro_version              
+            - echo "$res_debWebhook_payload" | jq '.'
 
         onSuccess: 
           - |
