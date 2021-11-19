@@ -68,10 +68,10 @@ pipelines:
         dryRun: false
         sign: false
         description: "Application deb distribution"
+        inputSteps:
+          - name: ExtractFileName
         inputResources:
           - name: debAql
-            trigger: true
-          - name: debWebhook
             trigger: false
         outputResources:
           - name: debReleaseBundle
@@ -84,11 +84,11 @@ pipelines:
       execution:
         onStart:
             - env
-            - export_run_variables
             - echo $app_name
             - echo $app_version
-            - echo $distro_version              
-            - echo "$res_debWebhook_payload" | jq '.'
+            - echo $distro_version   
+            - echo $distribution_filename
+
 
         onSuccess: 
           - |
