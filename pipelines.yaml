@@ -80,6 +80,12 @@ pipelines:
               * Bullet
               * Points
       execution:
+        onStart:
+            - echo $app_name
+            - echo $app_version
+            - echo $distro_version              
+            - env
+
         onSuccess: 
           - |
             resource_directory=$(find_resource_variable debReleaseBundle resourcePath)
