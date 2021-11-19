@@ -46,9 +46,9 @@ pipelines:
           - name: debAql
       execution:
           onExecute:
-            - set_payload debWebhook "$res_debWebhook_payload"
+            # - set_payload debWebhook "$res_debWebhook_payload"
             - echo "$res_debWebhook_payload" | jq '.' > payload.json
-            - set_payload debWebhook payload.json --file
+            # - set_payload debWebhook payload.json --file
             - cat payload.json
             - read_json payload.json "data.name"
             - add_run_variables distribution_filename=$(read_json payload.json "data.name")
