@@ -85,7 +85,7 @@ pipelines:
             - echo $app_version
             - echo $distro_version              
             - env
-            export_run_variables
+            - export_run_variables
             - echo $app_name
             - echo $app_version
             - echo $distro_version              
