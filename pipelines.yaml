@@ -28,11 +28,11 @@ resources:
     type: DistributionRule
     configuration:
       sourceDistribution: acmeDistributionIntegration
-      serviceName: "*"
-      siteName: "*"
-      cityName: "*"
-      countryCodes:
-        - "CN" 
+      siteName: "solengedge"
+      # serviceName: "*"
+      # cityName: "*"
+      # countryCodes:
+      #   - "CN" 
   
 pipelines:
   - name: acme_co_deb_release_bundle
