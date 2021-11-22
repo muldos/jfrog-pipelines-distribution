@@ -9,14 +9,7 @@ resources:
     configuration:
       sourceArtifactory: acme_co_artifactory
       query: items.find({"$and":[{"$or":[{"repo":{"$eq":"deb"}},{"repo":{"$eq":"acme_sthings_deb_local"}}]},{"$or":[{"name":{"$match":"${app_name}-*-${app_version}*"}},{"name":{"$match":"${app_name}_${app_version}_*"}}]}]})
-  
-  # - name: debReleaseBundle
-  #   type: ReleaseBundle
-  #   configuration:
-  #     sourceDistribution: acmeDistributionIntegration
-  #     name: ${app_name}
-  #     version: ${app_version}
-  
+    
   - name: debSignedBundle
     type: ReleaseBundle
     configuration:
@@ -49,9 +42,7 @@ pipelines:
           - name: debAql
       execution:
           onExecute:
-            # - set_payload debWebhook "$res_debWebhook_payload"
             - echo "$res_debWebhook_payload" | jq '.' > payload.json
-            # - set_payload debWebhook payload.json --file
             - cat payload.json
             - read_json payload.json "data.name"
             - add_run_variables distribution_filename=$(read_json payload.json "data.name")
@@ -63,7 +54,7 @@ pipelines:
             - add_run_variables distro_version=$(echo $distribution_filename | awk -F_ '{print $2}' | sed 's/[~]/-/g')
             - echo $distro_version
             
-    - name: bundle
+    - name: bundle_and_sign
       type: CreateReleaseBundle
       configuration:
         releaseBundleName: ${app_name}
@@ -90,28 +81,13 @@ pipelines:
             - echo $distro_version   
             - echo $distribution_filename
 
-        onSuccess: 
-          - |
-            resource_directory=$(find_resource_variable debReleaseBundle resourcePath)
-            env_file_path="$resource_directory/debReleaseBundle.env"
-            echo "name=$(find_step_configuration_value releaseBundleName)" >> $env_file_path
-            echo "version=$(find_step_configuration_value releaseBundleVersion)" >> $env_file_path
+        # onSuccess: 
+        #   - |
+        #     resource_directory=$(find_resource_variable debReleaseBundle resourcePath)
+        #     env_file_path="$resource_directory/debReleaseBundle.env"
+        #     echo "name=$(find_step_configuration_value releaseBundleName)" >> $env_file_path
+        #     echo "version=$(find_step_configuration_value releaseBundleVersion)" >> $env_file_path
               
-    # - name: sign
-    #   type: SignReleaseBundle
-    #   configuration:
-    #     inputResources:
-    #       - name: debReleaseBundle
-    #     outputResources:
-    #       - name: debSignedBundle
-    #   execution:
-    #     onSuccess: 
-    #       - |
-    #         resource_directory=$(find_resource_variable debSignedBundle resourcePath)
-    #         env_file_path="$resource_directory/debSignedBundle.env"
-    #         echo "name=$(find_resource_variable $inputReleaseBundleResourceName name)" >> $env_file_path
-    #         echo "version=$(find_resource_variable $inputReleaseBundleResourceName version)" >> $env_file_path
-
   - name: acme_co_deb_distribute
     configuration:
       chronological: false
