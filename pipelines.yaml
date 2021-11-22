@@ -21,7 +21,7 @@ resources:
     type: DistributionRule
     configuration:
       sourceDistribution: acmeDistributionIntegration
-      siteName: "SolEngUnifiedSelfHostJPD"
+      siteName: "solengedge"
       serviceName: "*"
       cityName: "*"
       countryCodes:
