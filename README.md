@@ -37,7 +37,7 @@ The `pipeline.yaml` definition file defines two connected pipeline instances:
    This webhook invokes the URL of the "Incoming Webhook" defined in the previous step.   
    Notice the "authorization" field added as a custom header, which should match the `authorization` value configured for the incoming webhook above. Use the `Test` button to make sure that the integration works.    
 
-   <img src="https://github.com/lsilvapvt/jfrog-pipelines-distribution/raw/main/images/webhook02.png" alt="WebhookIntegration2" width="600px" style="margin: 20px;"/>
+   <img src="https://github.com/lsilvapvt/jfrog-pipelines-distribution/raw/main/images/webhook03.png" alt="WebhookIntegration2" width="600px" style="margin: 20px;"/>
 
 
 4. Update custom fields in `pipelines.yaml` to match your environment  
