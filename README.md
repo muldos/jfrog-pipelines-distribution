@@ -2,6 +2,12 @@
 
 This repository shows an example of a [JFrog Pipeline](https://www.jfrog.com/confluence/display/JFROG/JFrog+Pipelines) that gets triggered by the upload of an artifact to a local [JFrog Artifactory](jfrog.com/confluence/display/JFROG/JFrog+Artifactory) repository and that distributes such artifact to a [JFrog Edge](https://www.jfrog.com/confluence/display/JFROG/JFrog+Artifactory+Edge) node and/or to another JFrog Artifactory instance. 
 
+<br/>
+
+   <img src="https://github.com/lsilvapvt/jfrog-pipelines-distribution/raw/main/images/DistributionPipeline.png" alt="Resource Bundle Creation Pipeline" width="100%" style="margin: 20px;"/>
+
+<br/>
+
 The `pipeline.yaml` definition file defines two connected pipeline instances:
 
 1. one to create and sign a Release Bundle for the uploaded artifact  
