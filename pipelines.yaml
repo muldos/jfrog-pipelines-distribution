@@ -29,10 +29,11 @@ resources:
     configuration:
       sourceDistribution: acmeDistributionIntegration
       siteName: "solengedge"
-      # serviceName: "*"
-      # cityName: "*"
-      # countryCodes:
-      #   - "CN" 
+      serviceName: "*"
+      cityName: "*"
+      countryCodes:
+        - "US" 
+        # - "CN" 
   
 pipelines:
   - name: acme_co_deb_release_bundle
