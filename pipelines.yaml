@@ -30,8 +30,8 @@ resources:
   
 pipelines:
   - name: acme_co_deb_release_bundle
-    configuration:
-      chronological: true
+    # configuration:
+    #   chronological: true
     steps:
     - name: ExtractFileName
       type: Bash
