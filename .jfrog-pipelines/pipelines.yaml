@@ -30,6 +30,6 @@ pipelines:
         condition: 'propKey == "drobundle.version"'
         inputSteps:
           - name: ProcessPayload
-        execution:
-          onExecute:
-            - echo 'success'
+      execution:
+        onExecute:
+          - echo 'success'
