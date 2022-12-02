@@ -2,7 +2,7 @@ resources:
   - name: droDocWebhook
     type: IncomingWebhook
     configuration:
-      webhookName: distributeOnReleaseDoc
+      webhookName: triggerDroBundle
   
 pipelines:
   - name: dro_create_bundle
