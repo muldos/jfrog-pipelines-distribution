@@ -8,20 +8,28 @@ resources:
     configuration:
       sourceArtifactory: droSolengRT
       query: items.find({"$and":[{"$or":[{"repo":{"$eq":"deb"}},{"repo":{"$eq":"acme_co_deb_local"}}]},{"$or":[{"name":{"$match":"${app_name}-*-${app_version}*"}},{"name":{"$match":"${app_name}_${app_version}_*"}}]}]})
- 
 pipelines:
   - name: dro_create_bundle
     configuration:
       chronological: true
     steps:
-    - name: ExtractFileName
+    - name: ProcessPayload
       type: Bash
       configuration:
         inputResources:
           - name: droDocWebhook
-
       execution:
           onExecute:
-            - echo "== Pipeline start =="
             - echo "$res_droDocWebhook_payload" | jq '.' > payload.json
-            
+            - cat payload.json
+            - add_run_variables propKey=$(read_json payload.json "data.property_key")
+            - echo $propKey
+    - name: GenerateArtifactQuery
+      type: Bash
+      configuration:
+        condition: 'propKey == "drobundle.version"'
+          inputSteps:
+            - name: ProcessPayload
+        execution:
+          onExecute:
+            - echo 'success'
