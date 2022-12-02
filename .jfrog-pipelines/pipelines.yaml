@@ -3,7 +3,12 @@ resources:
     type: IncomingWebhook
     configuration:
       webhookName: triggerDroBundle
-  
+  - name: propsSelectorQuery
+    type: Aql
+    configuration:
+      sourceArtifactory: droSolengRT
+      query: items.find({"$and":[{"$or":[{"repo":{"$eq":"deb"}},{"repo":{"$eq":"acme_co_deb_local"}}]},{"$or":[{"name":{"$match":"${app_name}-*-${app_version}*"}},{"name":{"$match":"${app_name}_${app_version}_*"}}]}]})
+ 
 pipelines:
   - name: dro_create_bundle
     configuration:
@@ -17,5 +22,6 @@ pipelines:
 
       execution:
           onExecute:
-            - echo "TODO !"
+            - echo "== Pipeline start =="
+            - echo "$res_droDocWebhook_payload" | jq '.' > payload.json
             
