@@ -1,35 +1,11 @@
 resources:
-  - name: debWebhook
+  - name: droDocWebhook
     type: IncomingWebhook
     configuration:
-      webhookName: acmeDebDistribute
-
-  - name: debAql
-    type: Aql
-    configuration:
-      sourceArtifactory: acme_co_artifactory
-      query: items.find({"$and":[{"$or":[{"repo":{"$eq":"deb"}},{"repo":{"$eq":"acme_co_deb_local"}}]},{"$or":[{"name":{"$match":"${app_name}-*-${app_version}*"}},{"name":{"$match":"${app_name}_${app_version}_*"}}]}]})
-    
-  - name: debSignedBundle
-    type: ReleaseBundle
-    configuration:
-      sourceDistribution: acmeDistributionIntegration
-      name: ${app_name}
-      version: ${app_version}
-
-  - name: debDistributionRules
-    type: DistributionRule
-    configuration:
-      sourceDistribution: acmeDistributionIntegration
-      siteName: "solengedge"
-      serviceName: "*"
-      cityName: "*"
-      countryCodes:
-        - "US" 
-        # - "CN" 
+      webhookName: distributeOnReleaseDoc
   
 pipelines:
-  - name: acme_co_deb_release_bundle
+  - name: dro_create_bundle
     configuration:
       chronological: true
     steps:
@@ -37,67 +13,9 @@ pipelines:
       type: Bash
       configuration:
         inputResources:
-          - name: debWebhook
-        outputResources:
-          - name: debAql
+          - name: droDocWebhook
+
       execution:
           onExecute:
-            - echo "$res_debWebhook_payload" | jq '.' > payload.json
-            - cat payload.json
-            - read_json payload.json "data.name"
-            - add_run_variables distribution_filename=$(read_json payload.json "data.name")
-            - echo $distribution_filename
-            - add_run_variables app_name=$(echo $distribution_filename | awk -F_ '{print $1}')
-            - echo $app_name
-            - add_run_variables app_version=$(echo $distribution_filename | awk -F_ '{print $2}')
-            - echo $app_version
-            - add_run_variables distro_version=$(echo $distribution_filename | awk -F_ '{print $2}' | sed 's/[~]/-/g')
-            - echo $distro_version
+            - echo "TODO !"
             
-    - name: bundle_and_sign
-      type: CreateReleaseBundle
-      configuration:
-        releaseBundleName: ${app_name}
-        releaseBundleVersion: ${distro_version}
-        dryRun: false
-        sign: true
-        description: "Application deb distribution"
-        inputResources:
-          - name: debAql
-            trigger: true
-        outputResources:
-          - name: debSignedBundle
-        releaseNotes:
-          syntax: markdown
-          content: |
-            ## Heading
-              * Bullet
-              * Points
-      execution:
-        onStart:
-            - env
-            - echo $app_name
-            - echo $app_version
-            - echo $distro_version   
-            - echo $distribution_filename
-
-        # onSuccess: 
-        #   - |
-        #     resource_directory=$(find_resource_variable debReleaseBundle resourcePath)
-        #     env_file_path="$resource_directory/debReleaseBundle.env"
-        #     echo "name=$(find_step_configuration_value releaseBundleName)" >> $env_file_path
-        #     echo "version=$(find_step_configuration_value releaseBundleVersion)" >> $env_file_path
-              
-  - name: acme_co_deb_distribute
-    configuration:
-      chronological: false
-    steps:
-    - name: distribute
-      type: DistributeReleaseBundle
-      configuration:
-        dryRun: false
-        inputResources:
-          - name: debSignedBundle
-            trigger: true 
-          - name: debDistributionRules
-            trigger: false
