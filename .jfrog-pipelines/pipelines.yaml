@@ -28,8 +28,8 @@ pipelines:
       type: Bash
       configuration:
         condition: 'propKey == "drobundle.version"'
-          inputSteps:
-            - name: ProcessPayload
+        inputSteps:
+          - name: ProcessPayload
         execution:
           onExecute:
             - echo 'success'
