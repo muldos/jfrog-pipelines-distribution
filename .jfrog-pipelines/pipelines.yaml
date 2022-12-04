@@ -12,7 +12,7 @@ resources:
   - name: droAppSignedBundle
     type: ReleaseBundle
     configuration:
-      sourceDistribution: DroDistribution
+      sourceDistribution: droDistribution
       name: DroDemoBundle
       version: ${propValue}
 pipelines:
