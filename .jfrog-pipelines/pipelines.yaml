@@ -55,7 +55,7 @@ pipelines:
         releaseNotes:
           syntax: markdown
           content: |
-            ## Heading
+            ## Demo Bundle Description
               * Sample bundle of app and pdf
               * Triggered by adding a given property
       execution:
