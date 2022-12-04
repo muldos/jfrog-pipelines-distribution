@@ -7,7 +7,8 @@ resources:
     type: Aql
     configuration:
       sourceArtifactory: droSolengRT
-      query: items.find({"$and":[{"$or":[{"repo":{"$eq":"deb"}},{"repo":{"$eq":"acme_co_deb_local"}}]},{"$or":[{"name":{"$match":"${app_name}-*-${app_version}*"}},{"name":{"$match":"${app_name}_${app_version}_*"}}]}]})
+      query: items.find({"$and":[{"$or":[{"repo":"dro-backend-docker-dev-local","repo":"dro-misc-assets-local"}]},{"type":"file"},{"@drobundle.version":"${propValue}"}]})
+      #query: items.find({"$and":[{"$or":[{"repo":{"$eq":"deb"}},{"repo":{"$eq":"acme_co_deb_local"}}]},{"$or":[{"name":{"$match":"${app_name}-*-${app_version}*"}},{"name":{"$match":"${app_name}_${app_version}_*"}}]}]})
 pipelines:
   - name: dro_create_bundle
     configuration:
@@ -23,17 +24,36 @@ pipelines:
             - echo "$res_droDocWebhook_payload" | jq '.' > payload.json
             - cat payload.json
             - add_run_variables propKey=$(read_json payload.json "data.property_key")
+            - add_run_variables propValue=$(read_json payload.json "data.property_value")
             - echo $propKey
             - if [ $propKey == "drobundle.version" ]; then  exit 0; fi
             - if [ $propKey != "drobundle.version" ]; then  exit 1; fi
-    - name: GenerateArtifactQuery
-      type: Bash
+    - name: bundle_and_sign
+      type: CreateReleaseBundle
       configuration:
         #condition: "propKey == 'drobundle.version'"
         inputSteps:
           - name: ProcessPayload
             status:
                 - success
+        releaseBundleName: droBundleApp
+        releaseBundleVersion: ${propValue}
+        dryRun: false
+        sign: true
+        description: "Docker images and doc bundle"
+        inputResources:
+          - name: propsSelectorQuery
+            trigger: true
+        outputResources:
+          - name: droAppSignedBundle
+        releaseNotes:
+          syntax: markdown
+          content: |
+            ## Heading
+              * Sample bundle of app and pdf
+              * Triggered by adding a given property
       execution:
-        onExecute:
-          - echo 'success'
+        onStart:
+            - env
+            - echo Generating bundle for version@
+            - echo $propValue
