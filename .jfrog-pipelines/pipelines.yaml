@@ -9,6 +9,12 @@ resources:
       sourceArtifactory: droSolengRT
       query: items.find({"$and":[{"$or":[{"repo":"dro-backend-docker-dev-local","repo":"dro-misc-assets-local"}]},{"type":"file"},{"@drobundle.version":"${propValue}"}]})
       #query: items.find({"$and":[{"$or":[{"repo":{"$eq":"deb"}},{"repo":{"$eq":"acme_co_deb_local"}}]},{"$or":[{"name":{"$match":"${app_name}-*-${app_version}*"}},{"name":{"$match":"${app_name}_${app_version}_*"}}]}]})
+  - name: droAppSignedBundle
+    type: ReleaseBundle
+    configuration:
+      sourceDistribution: DroDistribution
+      name: DroDemoBundle
+      version: ${propValue}
 pipelines:
   - name: dro_create_bundle
     configuration:
