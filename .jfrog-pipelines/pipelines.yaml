@@ -8,14 +8,23 @@ resources:
     configuration:
       sourceArtifactory: droSolengRT
       query: items.find({"$and":[{"$or":[{"repo":"dro-backend-docker-dev-local","repo":"dro-misc-assets-local"}]},{"type":"file"},{"@drobundle.version":"${bundleVersion}"}]})
-      #query: items.find({"$and":[{"$or":[{"repo":{"$eq":"deb"}},{"repo":{"$eq":"acme_co_deb_local"}}]},{"$or":[{"name":{"$match":"${app_name}-*-${app_version}*"}},{"name":{"$match":"${app_name}_${app_version}_*"}}]}]})
   - name: droAppSignedBundle
     type: ReleaseBundle
     configuration:
       sourceDistribution: droDistribution
       name: DroDemoBundle
       version: ${bundleVersion}
+  - name: droBundleDistributionRules
+    type: DistributionRule
+    configuration:
+      sourceDistribution: droDistribution
+      siteName: "solengedge"
+      serviceName: "*"
+      cityName: "*"
+      countryCodes:
+        - "US" 
 pipelines:
+# First pipeline : Create and sign the release bundle
   - name: dro_create_bundle
     configuration:
       chronological: true
@@ -26,6 +35,7 @@ pipelines:
         inputResources:
           - name: droDocWebhook
       execution:
+      # Here we extract data from the webhook payload
           onExecute:
             - echo "$res_droDocWebhook_payload" | jq '.' > payload.json
             - cat payload.json
@@ -38,6 +48,7 @@ pipelines:
       type: CreateReleaseBundle
       configuration:
         #condition: "propKey == 'drobundle.version'"
+        # available soon
         inputSteps:
           - name: ProcessPayload
             status:
@@ -63,3 +74,18 @@ pipelines:
             - env
             - echo "Generating bundle for version"
             - echo $bundleVersion
+# Second pipeline : distribute it to the edge "solengedge"
+  - name: dro_distribute_bundle
+    configuration:
+      chronological: false
+    steps:
+    - name: distribute
+    # We use another Native step
+      type: DistributeReleaseBundle
+      configuration:
+        dryRun: false
+        inputResources:
+          - name: droAppSignedBundle
+            trigger: true 
+          - name: droBundleDistributionRules
+            trigger: false
