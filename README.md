@@ -1,6 +1,8 @@
 # JFrog Distribution Pipeline Sample
 
-This repository shows an example of a [JFrog Pipeline](https://www.jfrog.com/confluence/display/JFROG/JFrog+Pipelines) that gets triggered by the upload of an artifact to a local [JFrog Artifactory](jfrog.com/confluence/display/JFROG/JFrog+Artifactory) repository and that distributes such artifact to a [JFrog Edge](https://www.jfrog.com/confluence/display/JFROG/JFrog+Artifactory+Edge) node and/or to another JFrog Artifactory instance. 
+This repository shows an example of a [JFrog Pipeline](https://www.jfrog.com/confluence/display/JFROG/JFrog+Pipelines) that gets triggered just by adding a given property to an artifact stored in a [JFrog Artifactory](jfrog.com/confluence/display/JFROG/JFrog+Artifactory) repository, and that distributes such artifact to a [JFrog Edge](https://www.jfrog.com/confluence/display/JFROG/JFrog+Artifactory+Edge) node and/or to another JFrog Artifactory instance. 
+
+A real use case for this could be to produce a release, when someone with limited tech skills just update a release notes document.
 
 <br/>
 
@@ -30,6 +32,10 @@ The `pipeline.yaml` definition file defines two connected pipeline instances:
 
 
 1. Fork this repository
+
+Then create the following Integrations 
+
+  <img src="https://github.com/lsilvapvt/jfrog-pipelines-distribution/raw/main/images/integrations.png" alt="AllIntegrations" width="400px" style="margin: 20px;"/>
 
 2. Define an [Incoming Webhook](https://www.jfrog.com/confluence/display/JFROG/Incoming+Webhook+Integration) under "Admin > Pipelines > Integrations" with a name that matches the value of `webhookName` of resource `droDocWebhook` (e.g. `acmeDebDistribute`)    
   
