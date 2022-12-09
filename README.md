@@ -48,7 +48,7 @@ Then create the following Integrations
   
     This is the mechanism that triggers the pipeline when a new artifact is uploaded into an Artifactory repository.   
   
-   <img src="https://github.com/lsilvapvt/jfrog-pipelines-distribution/raw/main/images/webhook01.png" alt="WebhookIntegration1" width="500px" style="margin: 20px;"/>
+   <img src="https://github.com/muldos/jfrog-pipelines-distribution/raw/main/images/webhook01.png" alt="WebhookIntegration1" width="500px" style="margin: 20px;"/>
   
 
 3. Define the [generic webhook](https://www.jfrog.com/confluence/display/JFROG/Webhooks) that triggers the pipeline  
