@@ -37,6 +37,13 @@ Then create the following Integrations
 
   <img src="https://github.com/muldos/jfrog-pipelines-distribution/raw/main/images/integrations.png" alt="AllIntegrations" width="400px" style="margin: 20px;"/>
 
+
+- dro_github will be used to interact and sync your pipeline from this github repository
+- droDistribution is a distribution integration 
+- droSolengRT is an artifactory integration, used by the AQL resources to know which artifactory server to use to perform the query.
+- triggerDroBundle is an IncomingWebhook integration that provides an url that can trigger the pipeline #1.
+
+
 2. Define an [Incoming Webhook](https://www.jfrog.com/confluence/display/JFROG/Incoming+Webhook+Integration) under "Admin > Pipelines > Integrations" with a name that matches the value of `webhookName` of resource `droDocWebhook` (e.g. `acmeDebDistribute`)    
   
     This is the mechanism that triggers the pipeline when a new artifact is uploaded into an Artifactory repository.   
