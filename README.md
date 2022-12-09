@@ -35,7 +35,7 @@ The `pipeline.yaml` definition file defines two connected pipeline instances:
 
 Then create the following Integrations 
 
-  <img src="https://github.com/lsilvapvt/jfrog-pipelines-distribution/raw/main/images/integrations.png" alt="AllIntegrations" width="400px" style="margin: 20px;"/>
+  <img src="https://github.com/muldos/jfrog-pipelines-distribution/raw/main/images/integrations.png" alt="AllIntegrations" width="400px" style="margin: 20px;"/>
 
 2. Define an [Incoming Webhook](https://www.jfrog.com/confluence/display/JFROG/Incoming+Webhook+Integration) under "Admin > Pipelines > Integrations" with a name that matches the value of `webhookName` of resource `droDocWebhook` (e.g. `acmeDebDistribute`)    
   
