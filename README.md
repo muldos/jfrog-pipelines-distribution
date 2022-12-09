@@ -4,24 +4,24 @@ This repository shows an example of a [JFrog Pipeline](https://www.jfrog.com/con
 
 <br/>
 
-   <img src="https://github.com/lsilvapvt/jfrog-pipelines-distribution/raw/main/images/DistributionPipeline.png" alt="Resource Bundle Creation Pipeline" width="100%" style="margin: 20px;"/>
+   <img src="https://github.com/muldos/jfrog-pipelines-distribution/raw/main/images/rb-pipeline-overview.png" alt="Resource Bundle Creation Pipeline" width="100%" style="margin: 20px;"/>
 
 <br/>
 
 The `pipeline.yaml` definition file defines two connected pipeline instances:
 
-1. one to create and sign a Release Bundle for the uploaded artifact  
+1. One to create and sign a Release Bundle when a given property is added to an artifact.
    
    Each run of this pipeline is executed serially to avoid a current known issue with resources state across runs.   
       
-   <img src="https://github.com/lsilvapvt/jfrog-pipelines-distribution/raw/main/images/pipeline01.png" alt="Resource Bundle Creation Pipeline" width="100%" style="margin: 20px;"/>
+   <img src="https://github.com/muldos/jfrog-pipelines-distribution/raw/main/images/pipeline01.png" alt="Resource Bundle Creation Pipeline" width="100%" style="margin: 20px;"/>
    
 
 2. the other one to distribute the release bundle to the targeted edge node (defined by the `DistributionRule` resource)   
    
-   This pipeline is triggered by the `debSignedBundle` resource output created by the previous pipeline. If nodes are available, this pipeline can have multiple runs executed in parallel.   
+   This pipeline is triggered by the `droAppSignedBundle` resource output created by the previous pipeline. If nodes are available, this pipeline can have multiple runs executed in parallel.   
      
-   <img src="https://github.com/lsilvapvt/jfrog-pipelines-distribution/raw/main/images/pipeline02.png" alt="Distribution Pipeline" width="300px" style="margin: 20px;"/>
+   <img src="https://github.com/muldos/jfrog-pipelines-distribution/raw/main/images/pipeline02.png" alt="Distribution Pipeline" width="300px" style="margin: 20px;"/>
 
 
 ---
@@ -31,7 +31,7 @@ The `pipeline.yaml` definition file defines two connected pipeline instances:
 
 1. Fork this repository
 
-2. Define an [Incoming Webhook](https://www.jfrog.com/confluence/display/JFROG/Incoming+Webhook+Integration) under "Admin > Pipelines > Integrations" with a name that matches the value of `webhookName` of resource `debWebhook` (e.g. `acmeDebDistribute`)    
+2. Define an [Incoming Webhook](https://www.jfrog.com/confluence/display/JFROG/Incoming+Webhook+Integration) under "Admin > Pipelines > Integrations" with a name that matches the value of `webhookName` of resource `droDocWebhook` (e.g. `acmeDebDistribute`)    
   
     This is the mechanism that triggers the pipeline when a new artifact is uploaded into an Artifactory repository.   
   
