@@ -82,9 +82,9 @@ They will be used respectively by the AQL Resource and the DistributionRule reso
 
 
 
-6. Trigger the first pipeline by uploading an artifact with the expected file name pattern to the repository that will trigger the webhook defined in step (3)    
+6. Trigger the first pipeline by uploading an artifact to the expected repository, and then add a property to it, with the name pattern expected in step 1    
 
-   The pipeline will create and sign a release bundle for the uploaded artifact and then will trigger the second pipeline to distribute the release bundle to the targeted edge nodes. 
+   The pipeline will create and sign a release bundle for all the artifacts with the same property of other repositories, and then will trigger the second pipeline to distribute the release bundle to the targeted edge nodes. 
 
 ---   
 
