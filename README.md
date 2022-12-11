@@ -61,12 +61,19 @@ Then create the following Integrations
    Now, you should be in this state 
    <img src="https://github.com/muldos/jfrog-pipelines-distribution/raw/main/images/pipeline-trigger.png" alt="WebhookIntegration1" width="500px" style="margin: 20px;"/>
 
+1.4. Define an Artifactory Integration, and a Distribution Integration, as described in our documentation.
+
+   <img src="https://github.com/muldos/jfrog-pipelines-distribution/raw/main/images/artifactory-int.png" alt="ArtifactoryIntegration" width="500px" style="margin: 20px;"/>
+   <img src="https://github.com/muldos/jfrog-pipelines-distribution/raw/main/images/distribution-int.png" alt="DistributionIntegration" width="500px" style="margin: 20px;"/>
+
+They will be used respectively by the AQL Resource and the DistributionRule resource
+
 
 4. Update custom fields in `pipelines.yaml` to match your environment  
 
    - Update the `query` parameter of the `propsSelectorQuery` resource to match the repository and the file path pattern of the artifacts to be included in the created resource bundle. Ideally, such files should match the ones that trigger the webhook in the step above.   
 
-   - Update resource `debDistributionRules` with your targeted edge nodes to distribute the release bundles to
+   - Update resource `droBundleDistributionRules` with your targeted edge nodes to distribute the release bundles to
 
 
 5. Add your git repo from (1) as a [pipeline source](https://www.jfrog.com/confluence/display/JFROG/Pipelines+Step-By-Step#PipelinesStep-By-Step-add-pipeline-sourceAddaPipelineSource)  
