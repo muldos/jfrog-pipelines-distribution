@@ -59,6 +59,7 @@ Then create the following Integrations
    <img src="https://github.com/muldos/jfrog-pipelines-distribution/raw/main/images/webhook02.png" alt="WebhookIntegration1" width="500px" style="margin: 20px;"/>
    
    Now, you should be in this state 
+   
    <img src="https://github.com/muldos/jfrog-pipelines-distribution/raw/main/images/pipeline-trigger.png" alt="WebhookIntegration1" width="500px" style="margin: 20px;"/>
 
 1.4. Define an Artifactory Integration, and a Distribution Integration, as described in our documentation.
