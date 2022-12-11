@@ -37,18 +37,19 @@ Then create the following Integrations
 
   <img src="https://github.com/muldos/jfrog-pipelines-distribution/raw/main/images/integrations.png" alt="AllIntegrations" width="400px" style="margin: 20px;"/>
 
+- dro_github is a [Github Intergation](https://www.jfrog.com/confluence/display/JFROG/Github+Integration), that will be used to interact and sync your pipeline YAML defintion from your github repository
+- droDistribution is a [Distribution integration](https://www.jfrog.com/confluence/display/JFROG/Distribution+Integration) 
+- droSolengRT is an [Artifactory integration](https://www.jfrog.com/confluence/display/JFROG/Artifactory+Integration), used by the AQL resources to know which artifactory instance to use to perform the query.
+- triggerDroBundle is an [IncomingWebhook integration](https://www.jfrog.com/confluence/display/JFROG/Incoming+Webhook+Integration) which provides an url to trigger pipeline #1.
 
-- dro_github will be used to interact and sync your pipeline from this github repository
-- droDistribution is a distribution integration 
-- droSolengRT is an artifactory integration, used by the AQL resources to know which artifactory server to use to perform the query.
-- triggerDroBundle is an IncomingWebhook integration that provides an url that can trigger the pipeline #1.
 
-
-2. Define an [Incoming Webhook](https://www.jfrog.com/confluence/display/JFROG/Incoming+Webhook+Integration) under "Admin > Pipelines > Integrations" with a name that matches the value of `webhookName` of resource `droDocWebhook` (e.g. `acmeDebDistribute`)    
+1.2. Define an [Incoming Webhook](https://www.jfrog.com/confluence/display/JFROG/Incoming+Webhook+Integration) under "Admin > Pipelines > Integrations" with a name that matches the value of `webhookName` of resource `droDocWebhook` (e.g. `triggerDroBundle`)
   
-    This is the mechanism that triggers the pipeline when a new artifact is uploaded into an Artifactory repository.   
+    This is the mechanism that will be used to trigger the pipeline when a new artifact is uploaded into an Artifactory repository, or in our case when a property is added to an artifact.
   
    <img src="https://github.com/muldos/jfrog-pipelines-distribution/raw/main/images/webhook01.png" alt="WebhookIntegration1" width="500px" style="margin: 20px;"/>
+
+   <img src="https://github.com/muldos/jfrog-pipelines-distribution/raw/main/images/pipeline-trigger.png" alt="WebhookIntegration1" width="500px" style="margin: 20px;"/>
   
 
 3. Define the [generic webhook](https://www.jfrog.com/confluence/display/JFROG/Webhooks) that triggers the pipeline  
@@ -56,12 +57,12 @@ Then create the following Integrations
    This webhook invokes the URL of the "Incoming Webhook" defined in the previous step.   
    Notice the "authorization" field added as a custom header, which should match the `authorization` value configured for the incoming webhook above. Use the `Test` button to make sure that the integration works.    
 
-   <img src="https://github.com/lsilvapvt/jfrog-pipelines-distribution/raw/main/images/webhook03.png" alt="WebhookIntegration2" width="600px" style="margin: 20px;"/>
+   <img src="https://github.com/muldos/jfrog-pipelines-distribution/raw/main/images/webhook03.png" alt="WebhookIntegration2" width="600px" style="margin: 20px;"/>
 
 
 4. Update custom fields in `pipelines.yaml` to match your environment  
 
-   - Update the `query` parameter of the `debAql` resource to match the repository and the file path pattern of the artifacts to be included in the created resource bundle. Ideally, such files should match the ones that trigger the webhook in the step above.   
+   - Update the `query` parameter of the `propsSelectorQuery` resource to match the repository and the file path pattern of the artifacts to be included in the created resource bundle. Ideally, such files should match the ones that trigger the webhook in the step above.   
 
    - Update resource `debDistributionRules` with your targeted edge nodes to distribute the release bundles to
 
