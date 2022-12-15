@@ -42,12 +42,12 @@ pipelines:
             - add_run_variables propKey=$(read_json payload.json "data.property_key")
             - add_run_variables bundleVersion=$(read_json payload.json "data.property_values[0]")
             - echo $propKey
-            - if [ $propKey == "drobundle.version" ]; then  exit 0; fi
-            - if [ $propKey != "drobundle.version" ]; then  exit 1; fi
+            #- if [ $propKey == "drobundle.version" ]; then  exit 0; fi
+            #- if [ $propKey != "drobundle.version" ]; then  exit 1; fi
     - name: bundle_and_sign
       type: CreateReleaseBundle
       configuration:
-        #condition: "propKey == 'drobundle.version'"
+        condition: "propKey == 'drobundle.version'"
         # available soon
         inputSteps:
           - name: ProcessPayload
